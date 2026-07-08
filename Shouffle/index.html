@@ -601,11 +601,7 @@
   'Matcha Garden': 17
 };
     // ===== Order Confirmation =====
-let orderId = "";
-let countdown = 300; // 5 minutes
-let timerInterval = null;
-    
-const prices={'The Original Cloud':14.5,'Summer Berry Bliss':16.5,'Matcha Garden':17};
+
 const om=document.getElementById('orderModal');
 document.getElementById('openOrderModal')?.addEventListener('click',()=>om.style.display='flex');
 document.querySelectorAll('.menu-card').forEach(c=>{
