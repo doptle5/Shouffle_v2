@@ -503,6 +503,54 @@
             document.getElementById('discountModal').style.display = 'none';
             sessionStorage.setItem('modalSeen', 'true');
         }
+        // =======================
+// CONFIRM ORDER BUTTON
+// =======================
+
+const confirmBtn = document.getElementById("confirmBtn");
+
+if (confirmBtn) {
+    confirmBtn.addEventListener("click", function () {
+
+        clearInterval(timerInterval);
+
+        document.getElementById("orderStatus").innerHTML = "🟢 Confirmed";
+        document.getElementById("orderStatus").className = "status confirmed";
+
+        document.querySelector(".cancel-box p").innerHTML =
+            "Thank you! Your order is now being prepared.";
+
+        document.getElementById("cancelBtn").style.display = "none";
+        document.getElementById("confirmBtn").style.display = "none";
+
+    });
+}
+        // =======================
+// CANCEL ORDER BUTTON
+// =======================
+
+const cancelBtn = document.getElementById("cancelBtn");
+
+if (cancelBtn) {
+    cancelBtn.addEventListener("click", function () {
+
+        if (!confirm("Are you sure you want to cancel your order?")) {
+            return;
+        }
+
+        clearInterval(timerInterval);
+
+        document.getElementById("orderStatus").innerHTML = "❌ Cancelled";
+        document.getElementById("orderStatus").className = "status cancelled";
+
+        document.querySelector(".cancel-box p").innerHTML =
+            "Your order has been cancelled.";
+
+        document.getElementById("cancelBtn").style.display = "none";
+        document.getElementById("confirmBtn").style.display = "none";
+
+    });
+}
     </script>
 
 <div class="modal-overlay" id="orderModal">
