@@ -18,19 +18,60 @@ exports.handler = async (event) => {
   try {
     const order = JSON.parse(event.body);
 
-    const { name, phone, email, address, product, qty, payment, total, notes } = order;
+  const {
+  orderId,
+  name,
+  phone,
+  email,
+  address,
+  product,
+  qty,
+  payment,
+  total,
+  notes
+} = order;
 
-    const message =
-      `🥞 *New Order Received!*\n\n` +
-      `*Product:* ${product}\n` +
-      `*Quantity:* ${qty}\n` +
-      `*Total:* $${total}\n` +
-      `*Payment:* ${payment}\n\n` +
-      `*Name:* ${name}\n` +
-      `*Phone:* ${phone}\n` +
-      (email ? `*Email:* ${email}\n` : '') +
-      `*Address:* ${address}\n` +
-      (notes ? `*Notes:* ${notes}\n` : '');
+   const message =
+`🆕 *NEW ORDER RECEIVED*
+
+━━━━━━━━━━━━━━
+
+🆔 *Order ID*
+${orderId}
+
+🟡 *Status*
+Pending Confirmation
+
+━━━━━━━━━━━━━━
+
+👤 *Customer*
+${name}
+
+📞 *Phone*
+${phone}
+
+${email ? `📧 *Email*\n${email}\n` : ""}
+
+📍 *Address*
+${address}
+
+━━━━━━━━━━━━━━
+
+🥞 *Product*
+${product}
+
+📦 *Quantity*
+${qty}
+
+💳 *Payment*
+${payment}
+
+💰 *Total*
+₱${total}
+
+${notes ? `📝 *Notes*\n${notes}\n` : ""}
+
+━━━━━━━━━━━━━━`;
 
     const token = process.env.TELEGRAM_BOT_TOKEN;
     const chatId = process.env.TELEGRAM_CHAT_ID;
