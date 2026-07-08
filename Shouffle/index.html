@@ -531,8 +531,66 @@
 <p><strong>Total: $<span id="total">14.50</span></strong></p>
 <button class="btn btn-primary" type="submit" style="width:100%">Place Order</button>
 </form>
-<div id="orderSuccess" style="display:none">
-<h3>🎉 Order Received!</h3><p>Thank you! We'll contact you shortly.</p>
+<div id="orderSuccess" class="order-success" style="display:none;">
+
+    <div class="success-icon">
+        ✅
+    </div>
+
+    <h2>Order Submitted Successfully!</h2>
+
+    <p>
+        Thank you for ordering with us.
+        Your order has been received successfully.
+    </p>
+
+    <div class="order-card">
+
+        <div class="order-row">
+            <span>Order ID</span>
+            <strong id="orderIdDisplay"></strong>
+        </div>
+
+        <div class="order-row">
+            <span>Status</span>
+
+            <span id="orderStatus" class="status pending">
+                🟡 Pending Confirmation
+            </span>
+        </div>
+
+    </div>
+
+    <div class="cancel-box">
+
+        <h3>Cancellation Window</h3>
+
+        <div id="cancelTimer">
+            05:00
+        </div>
+
+        <p>
+            You may cancel your order within five minutes.
+        </p>
+
+    </div>
+
+    <div class="action-buttons">
+
+        <button
+            id="cancelBtn"
+            class="btn btn-outline">
+            ❌ Cancel Order
+        </button>
+
+        <button
+            id="confirmBtn"
+            class="btn btn-primary">
+            ✅ I'm Not Canceling
+        </button>
+
+    </div>
+
 </div>
 </div></div>
 
