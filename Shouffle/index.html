@@ -745,16 +745,7 @@ document.addEventListener('click', function(e){
     document.getElementById("cancelBtn").style.display="none";
     document.getElementById("confirmBtn").style.display="none";
   }
-  if(e.target && e.target.id==='cancelBtn'){
-    if(!confirm("Are you sure you want to cancel your order?")) return;
-    clearInterval(timerInterval);
-    document.getElementById("orderStatus").innerHTML="❌ Cancelled";
-    document.getElementById("orderStatus").className="status cancelled";
-    document.querySelector(".cancel-box p").innerHTML="Your order has been cancelled.";
-    document.getElementById("cancelBtn").style.display="none";
-    document.getElementById("confirmBtn").style.display="none";
-  }
-});
+
 </script></body>
 
 </html>
