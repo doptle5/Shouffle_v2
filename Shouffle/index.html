@@ -733,18 +733,67 @@ const orderData = {
   });
 }
 
-// =======================
-// CONFIRM/CANCEL BUTTONS
-// =======================
-document.addEventListener('click', function(e){
-  if(e.target && e.target.id==='confirmBtn'){
-    clearInterval(timerInterval);
-    document.getElementById("orderStatus").innerHTML="🟢 Confirmed";
-    document.getElementById("orderStatus").className="status confirmed";
-    document.querySelector(".cancel-box p").innerHTML="Thank you! Your order is now being prepared.";
-    document.getElementById("cancelBtn").style.display="none";
-    document.getElementById("confirmBtn").style.display="none";
-  }
+// ===============================
+// CONFIRM / CANCEL BUTTONS
+// ===============================
+
+document.addEventListener("click", function (e) {
+
+    if (e.target && e.target.id === "confirmBtn") {
+
+        clearInterval(timerInterval);
+
+        document.getElementById("orderStatus").innerHTML = "🟢 Confirmed";
+        document.getElementById("orderStatus").className = "status confirmed";
+        document.querySelector(".cancel-box p").innerHTML =
+            "Thank you! Your order is now being prepared.";
+
+        document.getElementById("cancelBtn").style.display = "none";
+        document.getElementById("confirmBtn").style.display = "none";
+
+        fetch("/.netlify/functions/update-order-status", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                orderId: orderId,
+                customer: document.getElementById("custName").value,
+                status: "Confirmed"
+            })
+        });
+
+    }
+
+    if (e.target && e.target.id === "cancelBtn") {
+
+        if (!confirm("Are you sure you want to cancel your order?")) return;
+
+        clearInterval(timerInterval);
+
+        document.getElementById("orderStatus").innerHTML = "❌ Cancelled";
+        document.getElementById("orderStatus").className = "status cancelled";
+        document.querySelector(".cancel-box p").innerHTML =
+            "Your order has been cancelled.";
+
+        document.getElementById("cancelBtn").style.display = "none";
+        document.getElementById("confirmBtn").style.display = "none";
+
+        fetch("/.netlify/functions/update-order-status", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                orderId: orderId,
+                customer: document.getElementById("custName").value,
+                status: "Cancelled"
+            })
+        });
+
+    }
+
+});
 
 </script></body>
 
