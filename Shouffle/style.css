@@ -151,3 +151,139 @@ footer { background: var(--brown); color: var(--cream); border-top: 5px solid va
     .hero h1 { font-size: 3.5rem; }
     .time-num { font-size: 2.5rem; }
 }
+
+/* ==========================================
+   ORDER SUCCESS PANEL
+========================================== */
+
+.order-success{
+    text-align:center;
+    padding:25px;
+    animation:fadeIn .4s ease;
+}
+
+.success-icon{
+    width:80px;
+    height:80px;
+    margin:auto;
+    border-radius:50%;
+    background:#dff6e3;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:42px;
+    margin-bottom:15px;
+}
+
+.order-card{
+    background:#fff8ef;
+    border:2px solid #d8b46b;
+    border-radius:15px;
+    padding:15px;
+    margin:20px 0;
+}
+
+.order-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:10px 0;
+    font-size:16px;
+}
+
+.status{
+    font-weight:bold;
+}
+
+.pending{
+    color:#e2a600;
+}
+
+.confirmed{
+    color:#28a745;
+}
+
+.cancelled{
+    color:#d62d20;
+}
+
+.cancel-box{
+    background:#fff4e4;
+    border-radius:15px;
+    padding:20px;
+    margin:20px 0;
+}
+
+#cancelTimer{
+    font-size:38px;
+    font-weight:bold;
+    color:#6b3f1d;
+    margin:15px 0;
+    letter-spacing:2px;
+}
+
+.action-buttons{
+    display:flex;
+    gap:15px;
+    justify-content:center;
+    flex-wrap:wrap;
+    margin-top:25px;
+}
+
+#cancelBtn,
+#confirmBtn{
+    padding:14px 22px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+    transition:.25s;
+}
+
+#cancelBtn{
+    background:#ffe6e6;
+    color:#b30000;
+}
+
+#cancelBtn:hover{
+    background:#ffd1d1;
+    transform:translateY(-2px);
+}
+
+#confirmBtn{
+    background:#6b3f1d;
+    color:white;
+}
+
+#confirmBtn:hover{
+    background:#8a5327;
+    transform:translateY(-2px);
+}
+
+@keyframes fadeIn{
+
+from{
+opacity:0;
+transform:translateY(20px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+@media(max-width:600px){
+
+.action-buttons{
+flex-direction:column;
+}
+
+#cancelBtn,
+#confirmBtn{
+width:100%;
+}
+
+}
