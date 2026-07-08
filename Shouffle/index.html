@@ -595,6 +595,16 @@
 </div></div>
 
 <script>
+    const prices = {
+  'The Original Cloud': 14.5,
+  'Summer Berry Bliss': 16.5,
+  'Matcha Garden': 17
+};
+    // ===== Order Confirmation =====
+let orderId = "";
+let countdown = 300; // 5 minutes
+let timerInterval = null;
+    
 const prices={'The Original Cloud':14.5,'Summer Berry Bliss':16.5,'Matcha Garden':17};
 const om=document.getElementById('orderModal');
 document.getElementById('openOrderModal')?.addEventListener('click',()=>om.style.display='flex');
@@ -606,13 +616,93 @@ document.querySelectorAll('.menu-card').forEach(c=>{
 function closeOrderModal(){om.style.display='none'}
 window.closeOrderModal=closeOrderModal;
 function calc(){let p=document.getElementById('product').value,q=+document.getElementById('qty').value;document.getElementById('total').innerText=(prices[p]*q).toFixed(2);}
-document.getElementById('product').onchange=calc;
+// ===== ORDER CONFIRMATION FUNCTIONS =====
+
+let orderId = "";
+let countdown = 300; // 5 minutes
+let timerInterval = null;
+
+function generateOrderId() {
+    const now = new Date();
+
+    const yy = String(now.getFullYear()).slice(-2);
+    const mm = String(now.getMonth() + 1).padStart(2, "0");
+    const dd = String(now.getDate()).padStart(2, "0");
+
+    const random = Math.floor(1000 + Math.random() * 9000);
+
+    return `SK-${yy}${mm}${dd}-${random}`;
+}
+
+function updateTimer() {
+    const minutes = Math.floor(countdown / 60);
+    const seconds = countdown % 60;
+
+    document.getElementById("cancelTimer").innerText =
+        `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+}
+
+function startCancelCountdown() {
+
+    countdown = 300;
+
+    updateTimer();
+
+    timerInterval = setInterval(() => {
+
+        countdown--;
+
+        updateTimer();
+
+        if (countdown <= 0) {
+
+            clearInterval(timerInterval);
+
+            document.getElementById("orderStatus").innerHTML =
+                "🟢 Confirmed";
+
+            document.getElementById("cancelBtn").style.display = "none";
+
+            document.getElementById("confirmBtn").style.display = "none";
+
+            document.querySelector(".cancel-box p").innerHTML =
+                "Your order is now being prepared.";
+
+        }
+
+    }, 1000);
+
+}
+
+function showOrderConfirmation() {
+
+    orderId = generateOrderId();
+
+    document.getElementById("orderIdDisplay").innerText = orderId;
+
+    document.getElementById("orderStatus").innerHTML =
+        "🟡 Pending Confirmation";
+
+    orderForm.style.display = "none";
+
+    orderSuccess.style.display = "block";
+
+    startCancelCountdown();
+
+}
+    document.getElementById('product').onchange=calc;
 plus.onclick=()=>{qty.value=+qty.value+1;calc()}
 minus.onclick=()=>{if(+qty.value>1){qty.value=+qty.value-1;calc()}}
 document.getElementById('orderForm').onsubmit=(e)=>{
   e.preventDefault();
 
-  const orderData = {
+  // Generate a unique Order ID
+if (!orderId) {
+    orderId = generateOrderId();
+}
+
+const orderData = {
+    orderId: orderId,
     name: document.getElementById('custName').value,
     phone: document.getElementById('custPhone').value,
     email: document.getElementById('custEmail').value,
@@ -622,7 +712,7 @@ document.getElementById('orderForm').onsubmit=(e)=>{
     payment: document.getElementById('payment').value,
     total: document.getElementById('total').innerText,
     notes: document.getElementById('notes').value
-  };
+};
 
   const submitBtn = orderForm.querySelector('button[type="submit"]');
   submitBtn.disabled = true;
@@ -634,15 +724,13 @@ document.getElementById('orderForm').onsubmit=(e)=>{
     body: JSON.stringify(orderData)
   })
   .then(res => {
-    orderForm.style.display='none';
-    orderSuccess.style.display='block';
-  })
+    showOrderConfirmation();
+})
   .catch(err => {
     console.error('Order notification failed:', err);
-    // Still show success to the customer — the order intent was captured client-side either way
-    orderForm.style.display='none';
-    orderSuccess.style.display='block';
-  })
+
+    showOrderConfirmation();
+})
   .finally(() => {
     submitBtn.disabled = false;
     submitBtn.innerText = 'Place Order';
